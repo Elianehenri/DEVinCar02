@@ -17,4 +17,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DEVinCar.Domain\DEVinCar.Domain.csproj" />
+    <ProjectReference Include="..\DEVinCar.Infra\DEVinCar.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
