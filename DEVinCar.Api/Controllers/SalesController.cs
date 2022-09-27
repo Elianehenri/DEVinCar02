@@ -67,7 +67,7 @@ public class SalesController : ControllerBase
 
             var saleCar = new SaleCar
             {
-                Id = saleId,
+               // Id = saleId,
                 Amount = body.Amount,
                 CarId = body.CarId,
                 UnitPrice = unitPrice,

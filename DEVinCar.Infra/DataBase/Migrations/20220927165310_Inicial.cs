@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DEVinCar.Api.Data.Migrations
+namespace DEVinCar.Infra.DataBase.Migrations
 {
-    public partial class FixDeliveryTimestamp : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,13 +91,14 @@ namespace DEVinCar.Api.Data.Migrations
                         column: x => x.BuyerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                        onDelete: ReferentialAction.NoAction);
+                        table.ForeignKey(
                         name: "FK_Sales_Users_SellerId",
                         column: x => x.SellerId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
+                
                 });
 
             migrationBuilder.CreateTable(
@@ -110,7 +111,7 @@ namespace DEVinCar.Api.Data.Migrations
                     Street = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Cep = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
-                    Complement = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    Complement = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,7 +130,7 @@ namespace DEVinCar.Api.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: true),
                     CarId = table.Column<int>(type: "int", nullable: false),
                     SaleId = table.Column<int>(type: "int", nullable: false)
                 },

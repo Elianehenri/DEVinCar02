@@ -2,7 +2,7 @@ namespace DEVinCar.Api.Models
 {
     public class Address
     {
-        public int Id { get; set; }
+        public int Id { get; internal set; }
         public int CityId { get; set; }
         public string Street { get; set; }
         public string Cep { get; set; }

@@ -4,22 +4,20 @@ using DEVinCar.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DEVinCar.Api.Data.Migrations
+namespace DEVinCar.Infra.DataBase.Migrations
 {
     [DbContext(typeof(DevInCarDbContext))]
-    [Migration("20220823223452_fixDbSetCity")]
-    partial class fixDbSetCity
+    partial class DevInCarDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -41,6 +39,7 @@ namespace DEVinCar.Api.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Complement")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 

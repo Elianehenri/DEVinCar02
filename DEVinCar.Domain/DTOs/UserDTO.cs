@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using DEVinCar.Api.Annotations;
+//using DEVinCar.Api.Annotations;
 
 namespace DEVinCar.Api.DTOs{
     public class UserDTO{
@@ -13,11 +13,11 @@ namespace DEVinCar.Api.DTOs{
         [Required(ErrorMessage = "The password is required")]
         [MaxLength(50)]
         [MinLength(4, ErrorMessage = "The password must contain at least 4 digits")]
-        [DistinctCharactersAttribute]
+        //[DistinctCharactersAttribute]
         public string Password { get; set; }
         [DataType(DataType.Date, ErrorMessage="Date must be valid")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        [CheckAgeAttribute(18)]
+        //[CheckAgeAttribute(18)]
         public DateTime BirthDate { get; set; }
       
     }
