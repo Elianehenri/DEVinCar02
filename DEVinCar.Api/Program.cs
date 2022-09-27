@@ -3,6 +3,9 @@ using DEVinCar.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//dbcontext
+builder.Services.AddDbContext<DevInCarDbContext>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
