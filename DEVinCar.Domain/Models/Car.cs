@@ -1,4 +1,6 @@
-﻿namespace DEVinCar.Api.Models
+﻿using DEVinCar.Api.DTOs;
+
+namespace DEVinCar.Api.Models
 {
     public class Car
     {
@@ -14,6 +16,20 @@
             Id = id;
             Name = name;
             SuggestedPrice = suggestedPrice;
+        }
+
+        public Car(CarDTO car)
+        {
+            Id = car.Id;
+            Name = car.Name;
+            SuggestedPrice = car.SuggestedPrice;
+        }
+
+        public void Update(CarDTO car)
+        {
+            Id = car.Id;
+            Name = car.Name;
+            SuggestedPrice = car.SuggestedPrice;
         }
     }
 }

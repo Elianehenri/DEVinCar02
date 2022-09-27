@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
-using DEVinCar.Api.Data;
+using DEVinCar.Domain.Interfaces.Repositories;
+using DEVinCar.Infra;
+using DEVinCar.Infra.DataBase.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,11 @@ builder.Services.AddDbContext<DevInCarDbContext>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DevInCarDbContext>();
+
+
+
+//Services
+builder.Services.AddScoped<ICarRepositorio, CarRepositorio>();
 
 var app = builder.Build();
 
