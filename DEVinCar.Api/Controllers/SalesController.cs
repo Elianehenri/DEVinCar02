@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using DEVinCar.Api.Data;
 using DEVinCar.Api.DTOs;
 using DEVinCar.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DEVinCar.Api.ViewModels;
+using DEVinCar.Infra;
 
 namespace DEVinCar.Api.Controllers;
 

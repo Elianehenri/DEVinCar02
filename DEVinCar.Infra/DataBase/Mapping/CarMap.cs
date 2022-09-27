@@ -23,7 +23,7 @@ namespace DEVinCar.Infra.DataBase.Mapping
                     .HasPrecision(18, 2);
                 builder
                    .HasData(new[] {
-                    new Car (1, "Camaro Chevrolet", 60000M),
+                    new Car ( 1,"Camaro Chevrolet", 60000M),
                     new Car (2, "Maverick Ford", 20000M),
                     new Car (3, "Astra Chevrolet", 30000M),
                     new Car (4, "Hilux Toyota", 20000M),

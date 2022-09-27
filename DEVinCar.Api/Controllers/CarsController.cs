@@ -1,7 +1,6 @@
-
-using DEVinCar.Api.Data;
 using DEVinCar.Api.DTOs;
 using DEVinCar.Api.Models;
+using DEVinCar.Infra;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinCar.Api.Controllers;
@@ -18,7 +17,8 @@ public class CarController : ControllerBase
     }
 
     [HttpGet("{carId}")]
-    public ActionResult<Car> GetById([FromRoute] int carId)
+    public ActionResult<Car> GetById(
+        [FromRoute] int carId)
     {
         var car = _context.Cars.Find(carId);
         if (car == null) return NotFound();
@@ -76,7 +76,8 @@ public class CarController : ControllerBase
     }
 
     [HttpDelete("{carId}")]
-    public ActionResult Delete([FromRoute] int carId)
+    public ActionResult Delete(
+        [FromRoute] int carId)
     {
         var car = _context.Cars.Find(carId);
         var soldCar = _context.SaleCars.Any(s => s.CarId == carId);
@@ -94,7 +95,9 @@ public class CarController : ControllerBase
     }
 
     [HttpPut("{carId}")]
-    public ActionResult<Car> Put([FromBody] CarDTO carDto, [FromRoute] int carId)
+    public ActionResult<Car> Put(
+        [FromBody] CarDTO carDto, 
+        [FromRoute] int carId)
     {
         var car = _context.Cars.Find(carId);
         var name = _context.Cars.Any(c => c.Name == carDto.Name && c.Id != carId);
