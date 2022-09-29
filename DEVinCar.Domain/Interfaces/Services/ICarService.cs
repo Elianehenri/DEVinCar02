@@ -7,6 +7,8 @@ namespace DEVinCar.Domain.Interfaces.Services
 {
     public interface ICarService
     {
+        
+
         IList<Car> ObterTodos();
         CarDTO ObterPorId(int id);
         void Inserir(CarDTO car);

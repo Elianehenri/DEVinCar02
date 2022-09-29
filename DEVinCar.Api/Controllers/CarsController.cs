@@ -1,5 +1,6 @@
 
 using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
 using DEVinCar.Infra;
 using DEVinCar.Infra.Database;
@@ -12,17 +13,19 @@ namespace DEVinCar.Api.Controllers;
 public class CarController : ControllerBase
 {
     private readonly DevInCarDbContext _context;
+    private readonly ICarService _carService;
 
-    public CarController(DevInCarDbContext context)
+    public CarController(DevInCarDbContext context, ICarService carService)
     {
         _context = context;
+        _carService = carService;
     }
-
-    [HttpGet("{carId}")]
-    public ActionResult<Car> GetById(
-        [FromRoute] int carId)
+    //professor olha se esta certo essa parte
+    [HttpGet("{id}")]
+    public ActionResult<Car> ObterPorId(
+        [FromRoute] int id)
     {
-        var car = _context.Cars.Find(carId);
+        var car = _carService.ObterPorId(id);
         if (car == null) return NotFound();
         return Ok(car);
     }
