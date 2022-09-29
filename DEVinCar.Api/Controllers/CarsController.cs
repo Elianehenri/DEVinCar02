@@ -31,13 +31,13 @@ public class CarController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Car>> Get(
+    public ActionResult<List<Car>> ObterTodos(
         [FromQuery] string name,
         [FromQuery] decimal? priceMin,
         [FromQuery] decimal? priceMax
     )
     {
-        var query = _context.Cars.AsQueryable();
+        var query = _carService.ObterTodos().AsQueryable();
         if (!string.IsNullOrEmpty(name))
         {
             query = query.Where(c => c.Name.Contains(name));
@@ -62,65 +62,41 @@ public class CarController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Car> Post(
-        [FromBody] CarDTO body
+    public ActionResult<Car> Inserir(
+        [FromBody] CarDTO car
     )
     {
-        if (_context.Cars.Any(c => c.Name == body.Name || body.SuggestedPrice <= 0))
-        {
-            return BadRequest();
-        }
-        var car = new Car
-        {
-            Name = body.Name,
-            SuggestedPrice = body.SuggestedPrice,
-        };
-        _context.Cars.Add(car);
-        _context.SaveChanges();
+       
+        _carService.Inserir(car); 
         return Created("api/car", car);
     }
 
-    [HttpDelete("{carId}")]
-    public ActionResult Delete(
-        [FromRoute] int carId)
+    [HttpDelete("{id}")]
+    public ActionResult Excluir(
+        [FromRoute] int id)
     {
-        var car = _context.Cars.Find(carId);
-        var soldCar = _context.SaleCars.Any(s => s.CarId == carId);
-        if (car == null)
-        {
-            return NotFound();
-        }
-        if (soldCar)
-        {
-            return BadRequest();
-        }
-        _context.Remove(car);
-        _context.SaveChanges();
-        return NoContent();
+       
+          _carService.Excluir(id);
+           //_cacheServicePorId.Remove($"{id}");
+            return StatusCode(StatusCodes.Status204NoContent);
+
     }
 
-    [HttpPut("{carId}")]
-    public ActionResult<Car> Put(
-        [FromBody] CarDTO carDto, 
-        [FromRoute] int carId)
+    [HttpPut("{id}")]
+    public ActionResult<Car> Atualizar(
+        [FromBody] CarDTO car,
+        [FromRoute] int id  )
     {
-        var car = _context.Cars.Find(carId);
-        var name = _context.Cars.Any(c => c.Name == carDto.Name && c.Id != carId);
 
+        car.Id = id;
+        _carService.Atualizar(car);
+        //_cacheServicePorId.Remove($"{materiaId}");
 
-        if (car == null)
-            return NotFound();
-        if (carDto.Name.Equals(null) || carDto.SuggestedPrice.Equals(null))
-            return BadRequest();
-        if (carDto.SuggestedPrice <= 0)
-            return BadRequest();
-        if (name)
-            return BadRequest();
+        //_cacheServicePorNome.Remove(materia.Nome);
+        // var car = _carService.ObterPorId(id);
+        ////var name = _carService.ObterPorNome(car.Name);
+        return Ok();
 
-        car.Name = carDto.Name;
-        car.SuggestedPrice = carDto.SuggestedPrice;
-
-        _context.SaveChanges();
-        return NoContent();
+     
     }
 }

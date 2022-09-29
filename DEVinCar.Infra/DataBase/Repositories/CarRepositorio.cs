@@ -11,5 +11,9 @@ namespace DEVinCar.Infra.DataBase.Repositories
         {
         }
 
+        public List<Car> ObterPorNome(string nome)
+        {
+            return _contexto.Cars.Where(x => x.Name == nome).ToList();
+        }
     }
 }
