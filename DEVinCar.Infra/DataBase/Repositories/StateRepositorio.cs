@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DEVinCar.Infra.DataBase.Repositories
 {
-    internal class StateRepositorio : BaseRepositorio<State, int>, IStateRepositorio
+    public class StateRepositorio : BaseRepositorio<State, int>, IStateRepositorio
     {
         public StateRepositorio(DevInCarDbContext contexto) : base(contexto)
         {

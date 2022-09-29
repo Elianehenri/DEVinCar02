@@ -12,12 +12,12 @@ namespace DEVinCar.Api.Controllers;
 [Route("api/car")]
 public class CarController : ControllerBase
 {
-    private readonly DevInCarDbContext _context;
+   // private readonly DevInCarDbContext _context;
     private readonly ICarService _carService;
 
-    public CarController(DevInCarDbContext context, ICarService carService)
+    public CarController( ICarService carService)
     {
-        _context = context;
+        //_context = context;
         _carService = carService;
     }
     //professor olha se esta certo essa parte
@@ -95,8 +95,9 @@ public class CarController : ControllerBase
         //_cacheServicePorNome.Remove(materia.Nome);
         // var car = _carService.ObterPorId(id);
         ////var name = _carService.ObterPorNome(car.Name);
-        return Ok();
+       // return Ok();
+        return StatusCode(StatusCodes.Status201Created);
 
-     
+
     }
 }
