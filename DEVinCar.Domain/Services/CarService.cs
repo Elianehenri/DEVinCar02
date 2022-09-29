@@ -1,7 +1,8 @@
-﻿using DEVinCar.Api.DTOs;
-using DEVinCar.Api.Models;
+﻿ 
+using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Interfaces.Repositories;
 using DEVinCar.Domain.Interfaces.Services;
+using DEVinCar.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,11 +45,8 @@ namespace DEVinCar.Domain.Services
 
         public IList<Car> ObterTodos()
         {
-            throw new NotImplementedException();
+            return _carRepositorio.ObterTodos();
         }
-
-      
-
         
     }
 }

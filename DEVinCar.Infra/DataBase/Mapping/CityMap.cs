@@ -1,4 +1,5 @@
-﻿using DEVinCar.Api.Models;
+﻿
+using DEVinCar.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

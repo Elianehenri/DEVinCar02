@@ -1,6 +1,9 @@
 using System.Text.Json.Serialization;
 using DEVinCar.Domain.Interfaces.Repositories;
+using DEVinCar.Domain.Interfaces.Services;
+using DEVinCar.Domain.Services;
 using DEVinCar.Infra;
+using DEVinCar.Infra.Database;
 using DEVinCar.Infra.DataBase.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +19,12 @@ builder.Services.AddSwaggerGen();
 
 //Services
 builder.Services.AddScoped<ICarRepositorio, CarRepositorio>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IUserRepositorio, UserRepositorio>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAddressRepositorio, AddressRepositorio>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+
 
 var app = builder.Build();
 

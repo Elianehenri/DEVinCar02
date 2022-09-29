@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
-using DEVinCar.Api.Models;
-namespace DEVinCar.Api.ViewModels;
+
+namespace DEVinCar.Domain.ViewModels;
 public class SaleViewModel
 {
     public string SellerName { get; set; }

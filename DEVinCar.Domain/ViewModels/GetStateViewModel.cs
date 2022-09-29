@@ -1,6 +1,6 @@
-﻿using DEVinCar.Api.Models;
+﻿using DEVinCar.Domain.Models;
 
-namespace DEVinCar.Api.ViewModels {
+namespace DEVinCar.Domain.ViewModels {
     public class GetStateViewModel {
         public int Id { get; set; }
         public string Name { get; set; }

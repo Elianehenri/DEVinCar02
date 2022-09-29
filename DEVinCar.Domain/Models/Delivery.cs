@@ -1,8 +1,8 @@
 using System.Security.AccessControl;
 using System;
+using DEVinCar.Domain.DTOs;
 
-
-namespace DEVinCar.Api.Models;
+namespace DEVinCar.Domain.Models;
 public class Delivery
 {
     public int Id { get; internal set; }
@@ -13,5 +13,16 @@ public class Delivery
     public virtual Sale Sale { get; set; }
     public Delivery()
     {
-    }  
+    }
+    public Delivery(DeliveryDTO delivery)
+    {
+        AddressId = (int)delivery.AddressId;
+        DeliveryForecast = (DateTime)delivery.DeliveryForecast;
+    }
+
+    public void Update(DeliveryDTO delivery)
+    {
+        AddressId = (int)delivery.AddressId;
+        DeliveryForecast = (DateTime)delivery.DeliveryForecast;
+    }
 }

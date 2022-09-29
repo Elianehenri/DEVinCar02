@@ -1,4 +1,4 @@
-namespace DEVinCar.Api.ViewModels;
+namespace DEVinCar.Domain.ViewModels;
 
 public class GetCityByIdViewModel
 {
