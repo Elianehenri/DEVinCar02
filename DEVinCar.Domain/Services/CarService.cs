@@ -29,18 +29,39 @@ namespace DEVinCar.Domain.Services
 
         public void Excluir(int id)
         {
+
+     
             var car = _carRepositorio.ObterPorId(id);
             _carRepositorio.Excluir(car);
         }
 
         public void Inserir(CarDTO car)
         {
+            var carExiste = _carRepositorio.ObterPorNome(car.Name);
+
+            if (carExiste.Count > 0)
+                // throw new DuplicadoException("Carro já existe");
+                throw new Exception("Ja tem caro");
+
             _carRepositorio.Inserir(new Car(car));
+           
         }
 
         public CarDTO ObterPorId(int id)
         {
             return new CarDTO(_carRepositorio.ObterPorId(id));
+        }
+
+        public List<CarDTO> ObterPorNome(string nome)
+        {
+            var jaExiste = _carRepositorio.ObterPorNome(nome);
+
+            if (jaExiste.Count > 0)
+                throw new Exception("Ja tem caro");
+               //throw new DuplicadoException("Carro já existe");
+            return _carRepositorio.ObterPorNome(nome)
+                .Select(c => new CarDTO(c))
+                .ToList();
         }
 
         public IList<Car> ObterTodos()

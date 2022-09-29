@@ -12,6 +12,7 @@ namespace DEVinCar.Domain.Interfaces.Repositories
         void Inserir(Car car);
         void Excluir(Car car);
         void Atualizar(Car car);
+        List<Car> ObterPorNome(string nome);
 
 
     }

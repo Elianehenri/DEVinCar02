@@ -14,6 +14,7 @@ namespace DEVinCar.Domain.Interfaces.Services
         void Inserir(CarDTO car);
         void Excluir(int id);
         void Atualizar(CarDTO car);
-        
+        List<CarDTO> ObterPorNome(string nome);
+
     }
 }
