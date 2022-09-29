@@ -1,8 +1,6 @@
-﻿using DEVinCar.Api.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Runtime.ConstrainedExecution;
-using DEVinCar.Infra;
+﻿using Microsoft.AspNetCore.Mvc;
+using DEVinCar.Infra.Database;
+using DEVinCar.Domain.Models;
 
 namespace DEVinCar.Api.Controllers
 {

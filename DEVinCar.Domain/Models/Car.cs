@@ -1,6 +1,7 @@
-﻿using DEVinCar.Api.DTOs;
+﻿using DEVinCar.Domain.DTOs;
 
-namespace DEVinCar.Api.Models
+
+namespace DEVinCar.Domain.Models
 {
     public class Car
     {

@@ -1,4 +1,6 @@
-﻿namespace DEVinCar.Api.Models
+﻿using DEVinCar.Domain.DTOs;
+
+namespace DEVinCar.Domain.Models
 {
     public class SaleCar
     {
@@ -11,6 +13,22 @@
         public virtual Sale Sale { get; set; }
         public SaleCar()
         {
+        }
+
+        public SaleCar(SaleCarDTO saleCar)
+        {
+            CarId = saleCar.CarId;
+            UnitPrice = (decimal)saleCar.UnitPrice;
+            Amount = saleCar.Amount;
+            SaleId = saleCar.SaleId;
+        }
+
+        public void Update(SaleCarDTO saleCar)
+        {
+            CarId = saleCar.CarId;
+            UnitPrice = (decimal)saleCar.UnitPrice;
+            Amount = saleCar.Amount;
+            SaleId = saleCar.SaleId;
         }
         public decimal Sum(decimal UnitPrice, int? Amount)
         {

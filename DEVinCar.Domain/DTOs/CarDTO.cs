@@ -1,7 +1,8 @@
-﻿using DEVinCar.Api.Models;
+﻿
+using DEVinCar.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace DEVinCar.Api.DTOs
+namespace DEVinCar.Domain.DTOs
 {
     public class CarDTO
     {

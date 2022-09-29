@@ -1,10 +1,11 @@
 
-using DEVinCar.Api.Models;
+
+using DEVinCar.Domain.Models;
 using DEVinCar.Infra.DataBase.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace DEVinCar.Infra;
+namespace DEVinCar.Infra.Database;
 
 public class DevInCarDbContext : DbContext
 {

@@ -1,6 +1,7 @@
+using DEVinCar.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace DEVinCar.Api.DTOs
+namespace DEVinCar.Domain.DTOs
 {
     public class AddressPatchDTO
     {
@@ -12,5 +13,17 @@ namespace DEVinCar.Api.DTOs
         [MaxLength(255,ErrorMessage="The Complement must have a maximum of 255 characters")]
         public string Complement { get; set; }
 
+        public AddressPatchDTO()
+        {
+
+        }
+
+        public AddressPatchDTO( Address address)
+        {
+            Street = address.Street;
+            Cep = address.Cep;
+            Number = address.Number;
+            Complement = address.Complement;
+        }
     }
 }
