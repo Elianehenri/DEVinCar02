@@ -6,6 +6,7 @@ using DEVinCar.Infra.Database;
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Models;
 using DEVinCar.Domain.ViewModels;
+using DEVinCar.Domain.Interfaces.Services;
 
 namespace DEVinCar.Api.Controllers;
 
@@ -14,10 +15,12 @@ namespace DEVinCar.Api.Controllers;
 public class StatesController : ControllerBase
 {
     private readonly DevInCarDbContext _context;
+    private readonly IStateService _stateService;
 
-    public StatesController(DevInCarDbContext context)
+    public StatesController(DevInCarDbContext context, IStateService stateService)
     {
         _context = context;
+        _stateService = stateService;
     }
 
     [HttpPost("{stateId}/city")]

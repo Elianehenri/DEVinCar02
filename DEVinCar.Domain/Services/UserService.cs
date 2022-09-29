@@ -42,6 +42,8 @@ namespace DEVinCar.Domain.Services
             return new UserDTO(_userRepositorio.ObterPorId(id));
         }
 
+       
+
         public IList<User> ObterTodos()
         {
            return _userRepositorio.ObterTodos();

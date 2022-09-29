@@ -1,5 +1,6 @@
 ﻿ 
 using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Exceptions;
 using DEVinCar.Domain.Interfaces.Repositories;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
@@ -40,10 +41,12 @@ namespace DEVinCar.Domain.Services
             var carExiste = _carRepositorio.ObterPorNome(car.Name);
 
             if (carExiste.Count > 0)
-                // throw new DuplicadoException("Carro já existe");
-                throw new Exception("Ja tem caro");
+                throw new DuplicadoException("Carro já existe");
+            //throw new Exception("Ja tem caro");
+
 
             _carRepositorio.Inserir(new Car(car));
+                            
            
         }
 
@@ -57,8 +60,8 @@ namespace DEVinCar.Domain.Services
             var jaExiste = _carRepositorio.ObterPorNome(nome);
 
             if (jaExiste.Count > 0)
-                throw new Exception("Ja tem caro");
-               //throw new DuplicadoException("Carro já existe");
+               
+               throw new DuplicadoException("Carro já existe");
             return _carRepositorio.ObterPorNome(nome)
                 .Select(c => new CarDTO(c))
                 .ToList();

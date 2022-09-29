@@ -24,7 +24,7 @@ namespace DEVinCar.Domain.Services
         public void Excluir(int id)
         {
             var adress = _adressRepositorio.ObterPorId(id);
-            _adressRepositorio.Atualizar(adress);
+            _adressRepositorio.Excluir(adress);
         }
 
         public void Inserir(AdressDTO adress)

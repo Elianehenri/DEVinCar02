@@ -17,7 +17,10 @@ namespace DEVinCar.Domain.Services
 
         public void Atualizar(SaleCarDTO sale)
         {
-            var saleCarDb = _saleCarRepositorio.ObterPorId(sale.CarId);
+            decimal unitPrice;
+
+          
+                var saleCarDb = _saleCarRepositorio.ObterPorId(sale.CarId);
             saleCarDb.Update(sale);
             _saleCarRepositorio.Atualizar(saleCarDb);
         }
