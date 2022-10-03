@@ -19,34 +19,43 @@ namespace DEVinCar.Domain.Services
             _deliverRepositorio = deliverRepositorio;
         }
 
-        public void Atualizar(DeliveryDTO delivery)
-        {
-            var deliveryDb = _deliverRepositorio.ObterPorId(delivery.Id);
-            deliveryDb.Update(delivery);
-            _deliverRepositorio.Atualizar(deliveryDb);
-        }
+        //public void Atualizar(DeliveryDTO delivery)
+        //{
+        //    var deliveryDb = _deliverRepositorio.ObterPorId(delivery.Id);
+        //    deliveryDb.Update(delivery);
+        //    _deliverRepositorio.Atualizar(deliveryDb);
+        //}
 
-        public void Excluir(int id)
-        {
-            var delivery = _deliverRepositorio.ObterPorId(id);
-            _deliverRepositorio.Atualizar(delivery);
-        }
+        //public void Excluir(int id)
+        //{
+        //    var delivery = _deliverRepositorio.ObterPorId(id);
+        //    _deliverRepositorio.Atualizar(delivery);
+        //}
 
-        public void Inserir(DeliveryDTO delivery)
-        {
-            _deliverRepositorio.Inserir(new Delivery(delivery));
-        }
+        //public void Inserir(DeliveryDTO delivery)
+        //{
+        //    _deliverRepositorio.Inserir(new Delivery(delivery));
+        //}
 
         public DeliveryDTO ObterPorId(int id)
         {
             return new DeliveryDTO(_deliverRepositorio.ObterPorId(id));
         }
 
-        public IList<Delivery> ObterTodos()
-        {
-            return _deliverRepositorio.ObterTodos();
-        }
+       
 
-    
+        public IList<Delivery> ObterTodos( int? addressId, int? saleId)//int? id,
+        {
+            var query = _deliverRepositorio.Query();
+            if (addressId.HasValue)
+            {
+                query = query.Where(a => a.AddressId == addressId);
+            }
+            if (saleId.HasValue)
+            {
+                query = query.Where(s => s.SaleId == saleId);
+            }
+            return query.ToList();
+        }
     }
 }

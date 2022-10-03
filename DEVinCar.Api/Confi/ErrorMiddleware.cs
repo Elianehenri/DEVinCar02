@@ -32,7 +32,7 @@ namespace DEVinCar.Api.Confi
             string message;
 
 
-            if (ex is DuplicadoException)
+            if (ex is JaexisteException)
             {
                 status = HttpStatusCode.NotAcceptable;
                 message = ex.Message;
@@ -45,7 +45,7 @@ namespace DEVinCar.Api.Confi
 
             }
 
-            var response = new ErrorDTO(message);
+            var response = new NaoExisteException(message);
 
             context.Response.StatusCode = (int)status;
 

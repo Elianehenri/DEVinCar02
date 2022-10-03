@@ -1,22 +1,21 @@
 ﻿using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Exceptions;
 using DEVinCar.Domain.Interfaces.Repositories;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DEVinCar.Domain.Services
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepositorio _userRepositorio;
+        private readonly ISaleRepositorio _saleRepositorio;
 
-        public UserService(IUserRepositorio userRepositorio)
+        public UserService(IUserRepositorio userRepositorio, ISaleRepositorio saleRepositorio)
         {
             _userRepositorio = userRepositorio;
+            _saleRepositorio = saleRepositorio;
         }
 
         public void Atualizar(UserDTO user)
@@ -34,6 +33,12 @@ namespace DEVinCar.Domain.Services
 
         public void Inserir(UserDTO user)
         {
+            var oldUser = _userRepositorio.ObterPorEmail(user.Email);
+
+            if (oldUser != null)
+            {
+                throw new JaexisteException("Email ja cadastrado.");
+            }
             _userRepositorio.Inserir(new User(user));
         }
 
@@ -42,11 +47,48 @@ namespace DEVinCar.Domain.Services
             return new UserDTO(_userRepositorio.ObterPorId(id));
         }
 
-       
 
-        public IList<User> ObterTodos()
+
+        public IList<User> ObterPorNome(
+            string name,
+            DateTime? birthDateMax,
+            DateTime? birthDateMin)
         {
-           return _userRepositorio.ObterTodos();
+
+            var query = _userRepositorio.Query();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(c => c.Name.Contains(name));
+            }
+
+            if (birthDateMin.HasValue)
+            {
+                query = query.Where(c => c.BirthDate >= birthDateMin.Value);
+            }
+
+            if (birthDateMax.HasValue)
+            {
+                query = query.Where(c => c.BirthDate <= birthDateMax.Value);
+            }
+            return query.ToList();
+   
         }
+
+
+        public IList<Sale> GetByIdBuy(int id)
+        {
+            
+            return _saleRepositorio.GetByIdBuy(id);
+        }
+        public IList<Sale> GetSalesBySellerId(int id)
+        {
+            
+            return _saleRepositorio.GetSalesBySellerId(id);
+        }
+
     }
-}
+    }
+
+
+

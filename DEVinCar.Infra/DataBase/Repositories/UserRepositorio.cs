@@ -15,9 +15,14 @@ namespace DEVinCar.Infra.DataBase.Repositories
         {
         }
 
-        public List<User> ObterPorNome(string nome)
+        public IList<User> ObterPorNome(string nome)
         {
             return _contexto.Users.Where(u => u.Name == nome).ToList();
+        }
+
+        public User ObterPorEmail(string email)
+        {
+            return _contexto.Users.FirstOrDefault(u => u.Email == email);
         }
     }
 }

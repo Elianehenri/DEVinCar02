@@ -2,8 +2,6 @@
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
-using DEVinCar.Domain.Services;
-using DEVinCar.Infra;
 using DEVinCar.Infra.Database;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,48 +12,34 @@ namespace DEVinCar.Api.Controllers;
 
 public class UserController : ControllerBase
 {
-    // private readonly DevInCarDbContext _context;
+    private readonly DevInCarDbContext _context;
     private readonly IUserService _userService;
+    private readonly ISaleService _saleService;
 
-    public UserController(DevInCarDbContext context, IUserService userService)
+    public UserController(DevInCarDbContext context, IUserService userService, ISaleService saleService)
     {
-        // _context = context;
+        _context = context;
         _userService = userService;
+        _saleService = saleService;
     }
 
+
+
+    //Api/User?birthDateMax=12/12/1999
     [HttpGet]
     public ActionResult<List<User>> Get(
-       [FromQuery] string Name,
+       [FromQuery] string name,
        [FromQuery] DateTime? birthDateMax,
-       [FromQuery] DateTime? birthDateMin
-   )
+       [FromQuery] DateTime? birthDateMin)
     {
-        var query = _userService.ObterTodos().AsQueryable();
+        var users = _userService.ObterPorNome(name, birthDateMax, birthDateMin);
 
-        if (!string.IsNullOrEmpty(Name))
-        {
-            query = query.Where(c => c.Name.Contains(Name));
-        }
-
-        if (birthDateMin.HasValue)
-        {
-            query = query.Where(c => c.BirthDate >= birthDateMin.Value);
-        }
-
-        if (birthDateMax.HasValue)
-        {
-            query = query.Where(c => c.BirthDate <= birthDateMax.Value);
-        }
-
-        if (!query.ToList().Any())
+        if (!users.Any())
         {
             return NoContent();
         }
-
-        return Ok(
-            query
-            .ToList()
-            );
+        return Ok(users);
+       
     }
 
     [HttpGet("{id}")]
@@ -68,115 +52,65 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    // [HttpGet("{userId}/buy")]
-    // public ActionResult<Sale> GetByIdbuy(
-    //    [FromRoute] int userId)
+    [HttpGet("{userId}/buy")]
+    public ActionResult GetByIdBuy(
+       [FromRoute] int userId)
 
-    // {
-    //     var sales = _context.Sales.Where(s => s.BuyerId == userId);
+    {
+        var sales = _context.Sales.Where(s => s.BuyerId == userId);
 
-    //     if (sales == null || sales.Count() == 0)
-    //     {
-    //         return NoContent();
-    //     }
-    //     return Ok(sales.ToList());
-    // }
+        if (sales == null || sales.Count() == 0)
+        {
+            return NoContent();
+        }
+        return Ok(sales.ToList());
+    }
 
-    // [HttpGet("{userId}/sales")]
-    // public ActionResult<Sale> GetSalesBySellerId(
-    //    [FromRoute] int userId)
-    // {
-    //     var sales = _context.Sales.Where(s => s.SellerId == userId);
+    [HttpGet("{userId}/sales")]
+    public ActionResult GetSalesBySellerId(
+       [FromRoute] int userId)
+    {
+        var sales = _context.Sales.Where(s => s.SellerId == userId);
 
-    //     if (sales == null || sales.Count() == 0)
-    //     {
-    //         return NoContent();
-    //     }
-    //     return Ok(sales.ToList());
-    // }
+        if (sales == null || sales.Count() == 0)
+        {
+            return NoContent();
+        }
+        return Ok(sales.ToList());
+    }
 
     [HttpPost]
-    public ActionResult<User> Post(
+    public ActionResult Post(
         [FromBody] UserDTO user)
     {
         _userService.Inserir(user);
-        return StatusCode(StatusCodes.Status201Created);
+        return Created("api/users", user.Id);
+        
     }
 
-    // [HttpPost("{userId}/sales")]
-    // public ActionResult<Sale> PostSaleUserId(
-    //        [FromRoute] int userId,
-    //        [FromBody] SaleDTO body)
-    // {
+    [HttpPost("{userId}/sales")]
+    public ActionResult<Sale> PostSaleUserId(
+           [FromRoute] int userId,
+           [FromBody] SaleDTO saleDto)
+    {
+        _saleService.Inserir(saleDto);
 
-    //     if (_context.Sales.Any(s => s.BuyerId == 0 || body.BuyerId == 0))
-    //     {
-    //         return BadRequest();
-    //     }
+          return Created("api/sale", userId);
 
-    //     var user = _context.Users.Find(userId);
-    //     if (user == null)
-    //     {
-    //         return NotFound("The user does not exist!");
-    //     }
+    }
 
-    //     var bayer = _context.Users.Find(body.BuyerId);
-    //     if (bayer == null)
-    //     {
-    //         return NotFound("The user does not exist!");
-    //     }
+    [HttpPost("{userId}/buy")]
 
-    //     if (body.SaleDate == null)
-    //     {
-    //         body.SaleDate = DateTime.Now;
-    //     }
+    public ActionResult<Sale> PostBuyUserId(
+          [FromRoute] int userId,
+          [FromBody] BuyDTO buyDto)
+    {
 
-    //     var sale = new Sale
-    //     {
-    //         BuyerId = body.BuyerId,
-    //         SellerId = userId,
-    //         SaleDate = body.SaleDate,
-    //     };
-    //     _context.Sales.Add(sale);
-    //     _context.SaveChanges();
-    //     return Created("api/sale", sale.Id);
+        _saleService.Inserir(buyDto);
+        return Created("api/user/{userId}/buy", userId);
 
-    // }
-
-    // [HttpPost("{userId}/buy")]
-
-    //public ActionResult<Sale> PostBuyUserId(
-    //       [FromRoute] int userId,
-    //       [FromBody] BuyDTO body)
-    // {
-
-    //     var user = _context.Users.Find(userId);
-    //     if (user == null)
-    //     {
-    //         return NotFound("The user does not exist!");
-    //     }
-
-    //     var seller = _context.Users.Find(body.SellerId);
-    //     if (seller == null)
-    //     {
-    //         return NotFound("The user does not exist!");
-    //     }
-    //     if (body.SaleDate == null)
-    //     {
-    //         body.SaleDate = DateTime.Now;
-    //     }
-
-    //     var buy = new Sale
-    //     {
-    //         BuyerId = userId,
-    //         SellerId = body.SellerId,
-    //         SaleDate = body.SaleDate,
-    //     };
-
-    //     _context.Sales.Add(buy);
-    //     _context.SaveChanges();
-    //     return Created("api/user/{userId}/buy", buy.Id);
-    // }
+       
+    }
 
 
     [HttpPut("{id}")]

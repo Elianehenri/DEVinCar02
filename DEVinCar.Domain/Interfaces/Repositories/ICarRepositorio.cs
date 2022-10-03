@@ -8,11 +8,13 @@ namespace DEVinCar.Domain.Interfaces.Repositories
     {
 
         IList<Car> ObterTodos();
+        List<Car> ObterPorNome(string nome);
         Car ObterPorId ( int id );
         void Inserir(Car car);
         void Excluir(Car car);
         void Atualizar(Car car);
-        List<Car> ObterPorNome(string nome);
+        IQueryable<Car> Query();
+
 
 
     }

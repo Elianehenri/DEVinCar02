@@ -14,6 +14,14 @@ namespace DEVinCar.Domain.DTOs
         {
         }
 
+        public SaleCarDTO(int carId, decimal? unitPrice, int? amount, int saleId)
+        {
+            CarId = carId;
+            UnitPrice = unitPrice;
+            Amount = amount;
+            SaleId = saleId;
+        }
+
         public SaleCarDTO(SaleCar saleCar)
         {
             CarId = saleCar.CarId;

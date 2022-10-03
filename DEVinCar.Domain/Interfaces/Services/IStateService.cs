@@ -10,10 +10,14 @@ namespace DEVinCar.Domain.Interfaces.Services
 {
     public interface IStateService
     {
-        IList<State> ObterTodos();
-        StateDTO ObterPorId(int id);
-        void Inserir(StateDTO state);
+        IList<State> ObterPorNome(string name);//estado
+        IList<City> ObterPorNomeCity(int stateId, string name);
+        StateDTO ObterPorId(int id);//get por estado
+        void Inserir(StateDTO state);//post
+        void Inserir(CityDTO cityDTO);
+        public void InserirAddress(AddressDTO addressDTO);
         void Excluir(int id);
-        void Atualizar(StateDTO state);
+       // void Atualizar(StateDTO state);
+        CityDTO ObterCityPorId(int stateId, int cityId);//get por cidade
     }
 }

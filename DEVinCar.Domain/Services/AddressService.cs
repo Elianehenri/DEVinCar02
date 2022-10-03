@@ -2,45 +2,81 @@
 using DEVinCar.Domain.Interfaces.Repositories;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
+using DEVinCar.Domain.ViewModels;
+using System.Linq;
+using System.Net;
 
 namespace DEVinCar.Domain.Services
 {
     public class AddressService : IAddressService
     {
-        private readonly IAddressRepositorio _adressRepositorio;
+        private readonly IAddressRepositorio _addressRepositorio;
 
-        public AddressService(IAddressRepositorio adressRepositorio)
+        public AddressService(IAddressRepositorio addressRepositorio)
         {
-            _adressRepositorio = adressRepositorio;
+            _addressRepositorio = addressRepositorio;
         }
 
-        public void Atualizar(AdressDTO adress)
-        {
-            var adressDb = _adressRepositorio.ObterPorId(adress.Id);
-            adressDb.Update(adress);
-            _adressRepositorio.Atualizar(adressDb);
-        }
 
         public void Excluir(int id)
         {
-            var adress = _adressRepositorio.ObterPorId(id);
-            _adressRepositorio.Excluir(adress);
+            var address = _addressRepositorio.ObterPorId(id);
+            _addressRepositorio.Excluir(address);
         }
 
-        public void Inserir(AdressDTO adress)
+        public void Inserir(AddressDTO address)
         {
-            _adressRepositorio.Inserir(new Address(adress));
+            _addressRepositorio.Inserir(new Address(address));
         }
 
-
-        public AdressDTO ObterPorId(int id)
+        public AddressDTO ObterPorId(int id)
         {
-            return new AdressDTO(_adressRepositorio.ObterPorId(id));
+            return new AddressDTO(_addressRepositorio.ObterPorId(id));
         }
 
-        public IList<Address> ObterTodos()
+        public IList<Address> ObterTodos(
+            int? cityId, 
+            int? stateId, 
+            string street, 
+            string cep)
         {
-            return _adressRepositorio.ObterTodos();
+            var query = _addressRepositorio.Query();
+
+            if (cityId.HasValue)
+            {
+                query = query.Where(a => a.CityId == cityId);
+            }
+            if (stateId.HasValue)
+            {
+                query = query.Where(a => a.City.StateId == stateId);
+            }
+
+            if (!string.IsNullOrEmpty(street))
+            {
+                street = street.ToUpper();
+                query = query.Where(a => a.Street.Contains(street));
+            }
+
+            if (!string.IsNullOrEmpty(cep))
+            {
+                query = query.Where(a => a.Cep == cep);
+            }
+
+
+            List<AddressViewModel> addressesViewModel = new List<AddressViewModel>();
+            query
+               
+                .ToList().ForEach(address => {
+                    addressesViewModel.Add(new AddressViewModel(address.Id,
+                                                            address.Street,
+                                                            address.CityId,
+                                                            address.City.Name,
+                                                            address.Number,
+                                                            address.Complement,
+                                                            address.Cep));
+                });
+            return ((IList<Address>)addressesViewModel);
+
         }
     }
 }

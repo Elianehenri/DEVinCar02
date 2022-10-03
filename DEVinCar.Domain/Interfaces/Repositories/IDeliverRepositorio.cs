@@ -12,8 +12,6 @@ namespace DEVinCar.Domain.Interfaces.Repositories
     {
         IList<Delivery> ObterTodos();
         Delivery  ObterPorId(int id);
-        void Inserir(Delivery delivery);
-        void Excluir(Delivery delivery);
-        void Atualizar(Delivery delivery);
+        IQueryable<Delivery> Query();
     }
 }

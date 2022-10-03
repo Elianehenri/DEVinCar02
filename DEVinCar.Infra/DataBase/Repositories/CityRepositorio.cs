@@ -13,8 +13,12 @@ namespace DEVinCar.Infra.DataBase.Repositories
     {
         public CityRepositorio(DevInCarDbContext contexto) : base(contexto)
         {
-
+           
         }
 
+        public IList<City> ObterPorNomeCity(int stateId, string? name)
+        {
+            return _contexto.Cities.Where(u => u.Name == name).ToList();
+        }
     }
 }

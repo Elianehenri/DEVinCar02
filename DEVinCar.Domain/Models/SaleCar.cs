@@ -4,7 +4,7 @@ namespace DEVinCar.Domain.Models
 {
     public class SaleCar
     {
-        public int Id { get; internal set; }
+        public int Id { get;  set; }
         public decimal UnitPrice { get; set; }
         public int? Amount { get; set; }
         public int CarId { get; set; }
@@ -13,6 +13,15 @@ namespace DEVinCar.Domain.Models
         public virtual Sale Sale { get; set; }
         public SaleCar()
         {
+        }
+
+        public SaleCar( decimal unitPrice, int? amount, int carId, int saleId)
+        {
+            
+            UnitPrice = unitPrice;
+            Amount = amount;
+            CarId = carId;
+            SaleId = saleId;
         }
 
         public SaleCar(SaleCarDTO saleCar)

@@ -18,16 +18,16 @@ namespace DEVinCar.Domain.DTOs
 
         public CarDTO(Car car)
         {
-            Id = car.Id;
+            //Id = car.Id;
             Name = car.Name;
             SuggestedPrice = car.SuggestedPrice;
         }
 
-        public CarDTO(int id, string name, decimal suggestedPrice)
-        {
-            Id = id;
-            Name = name;
-            SuggestedPrice = suggestedPrice;
-        }
+        //public CarDTO( string name, decimal suggestedPrice)
+        //{
+        //    //Id = id;
+        //    Name = name;
+        //    SuggestedPrice = suggestedPrice;
+        //}
     }
 }

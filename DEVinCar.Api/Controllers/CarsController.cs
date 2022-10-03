@@ -2,8 +2,6 @@
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
-using DEVinCar.Infra;
-using DEVinCar.Infra.Database;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinCar.Api.Controllers;
@@ -12,17 +10,17 @@ namespace DEVinCar.Api.Controllers;
 [Route("api/car")]
 public class CarController : ControllerBase
 {
-   // private readonly DevInCarDbContext _context;
+   
     private readonly ICarService _carService;
 
     public CarController( ICarService carService)
     {
-        //_context = context;
+       
         _carService = carService;
     }
-    //professor olha se esta certo essa parte
+    
     [HttpGet("{id}")]
-    public ActionResult<Car> ObterPorId(
+    public ActionResult<Car> GetPorId(
         [FromRoute] int id)
     {
         var car = _carService.ObterPorId(id);
@@ -31,38 +29,22 @@ public class CarController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Car>> ObterTodos(
+    public ActionResult<List<Car>> Get(
         [FromQuery] string name,
         [FromQuery] decimal? priceMin,
         [FromQuery] decimal? priceMax
     )
     {
-        var query = _carService.ObterTodos().AsQueryable();
-        if (!string.IsNullOrEmpty(name))
-        {
-            query = query.Where(c => c.Name.Contains(name));
-        }
-        if (priceMin > priceMax)
-        {
-            return BadRequest();
-        }
-        if (priceMin.HasValue)
-        {
-            query = query.Where(c => c.SuggestedPrice >= priceMin);
-        }
-        if (priceMax.HasValue)
-        {
-            query = query.Where(c => c.SuggestedPrice <= priceMax);
-        }
-        if (!query.ToList().Any())
+        var cars = _carService.ObterTodos(name, priceMin, priceMax);
+        if (!cars.Any())
         {
             return NoContent();
         }
-        return Ok(query.ToList());
+        return Ok(cars);
     }
 
     [HttpPost]
-    public ActionResult<Car> Inserir(
+    public ActionResult<Car> Post(
         [FromBody] CarDTO car
     )
     {
@@ -72,7 +54,7 @@ public class CarController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult Excluir(
+    public ActionResult Delete(
         [FromRoute] int id)
     {
        
@@ -83,21 +65,33 @@ public class CarController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Car> Atualizar(
+    public ActionResult<Car> Put(
         [FromBody] CarDTO car,
         [FromRoute] int id  )
     {
 
-        car.Id = id;
+        //car.Id = id;
         _carService.Atualizar(car);
-        //_cacheServicePorId.Remove($"{materiaId}");
+       // _cacheServicePorId.Remove($"{materiaId}");
 
         //_cacheServicePorNome.Remove(materia.Nome);
-        // var car = _carService.ObterPorId(id);
-        ////var name = _carService.ObterPorNome(car.Name);
-       // return Ok();
+        //var car = _carService.ObterPorId(id);
+        var name = _carService.ObterPorNome(car.Name);
+      
         return StatusCode(StatusCodes.Status201Created);
 
+        //var oldcar = _carService.Atualizar(car, id)
+        //var name = _carService.Any(c => c.Name == car.Name && c.Id != carId);
+        //if (car == null)
+        //    return NotFound();
+        //if (oldcar.Name.Equals(null) || oldcar.SuggestedPrice.Equals(null))
+        //    return BadRequest();
+        //if (car.SuggestedPrice <= 0)
+        //    return BadRequest();
+        //if (name)
+        //    return BadRequest();
+        //car.Name = car.Name;
+        //car.SuggestedPrice = car.SuggestedPrice;
 
     }
 }

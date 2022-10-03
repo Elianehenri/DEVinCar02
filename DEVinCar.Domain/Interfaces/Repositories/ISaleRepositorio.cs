@@ -1,4 +1,5 @@
-﻿using DEVinCar.Domain.Models;
+﻿using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,8 @@ namespace DEVinCar.Domain.Interfaces.Repositories
         void Inserir(Sale sale);
         void Excluir(Sale sale);
         void Atualizar(Sale sale);
+        IList<Sale> GetByIdBuy(int userId);
+        IList<Sale> GetSalesBySellerId(int userId);
+        public void InserirDelivery(int saleId, DeliveryDTO deliveryDTO);
     }
 }
