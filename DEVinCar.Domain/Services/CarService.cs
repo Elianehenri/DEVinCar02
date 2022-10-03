@@ -1,14 +1,9 @@
-﻿ 
-using DEVinCar.Domain.DTOs;
+﻿using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Exceptions;
 using DEVinCar.Domain.Interfaces.Repositories;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DEVinCar.Domain.Services
 {
@@ -31,7 +26,6 @@ namespace DEVinCar.Domain.Services
         public void Excluir(int id)
         {
 
-     
             var car = _carRepositorio.ObterPorId(id);
             _carRepositorio.Excluir(car);
         }
@@ -41,13 +35,11 @@ namespace DEVinCar.Domain.Services
             var carExiste = _carRepositorio.ObterPorNome(car.Name);
 
             if (carExiste.Count > 0)
-                throw new DuplicadoException("Carro já existe");
-            //throw new Exception("Ja tem caro");
-
+                throw new JaexisteException("Carro já existe");
+            
 
             _carRepositorio.Inserir(new Car(car));
-                            
-           
+
         }
 
         public CarDTO ObterPorId(int id)
@@ -61,17 +53,38 @@ namespace DEVinCar.Domain.Services
 
             if (jaExiste.Count > 0)
                
-               throw new DuplicadoException("Carro já existe");
+               throw new JaexisteException("Carro já existe");
             return _carRepositorio.ObterPorNome(nome)
                 .Select(c => new CarDTO(c))
                 .ToList();
         }
 
-        public IList<Car> ObterTodos()
+        public IList<Car> ObterTodos(           
+            string name,
+            decimal? priceMin,
+            decimal? priceMax)
         {
-            return _carRepositorio.ObterTodos();
+            var query = _carRepositorio.Query();
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(c => c.Name.Contains(name));
+            }
+            //if (priceMin > priceMax)
+            //{
+            //    return BadRequest();
+            //}
+            if (priceMin.HasValue)
+            {
+                query = query.Where(c => c.SuggestedPrice >= priceMin);
+            }
+            if (priceMax.HasValue)
+            {
+                query = query.Where(c => c.SuggestedPrice <= priceMax);
+            }
+            return query.ToList();
         }
-        
+
+       
     }
 }
 

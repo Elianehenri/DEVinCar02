@@ -13,6 +13,9 @@ namespace DEVinCar.Domain.Interfaces.Services
         IList<Sale> ObterTodos();
         SaleDTO ObterPorId(int id);
         void Inserir(SaleDTO sale);
+        void Inserir(SaleCarDTO saleCarDTO);
+        void Inserir(BuyDTO sale);
+        void InserirDelivery(int saleId, DeliveryDTO deliveryDTO);
         void Excluir(int id);
         void Atualizar(SaleDTO sale);
     }

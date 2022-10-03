@@ -21,20 +21,20 @@ namespace DEVinCar.Domain.Models
         {
         }
 
-        public Address(AdressDTO adress)
+        public Address(AddressDTO address)
         {
-            Street = adress.Street;
-            Cep = adress.Cep;
-            Number = adress.Number;
-            Complement = adress.Complement;
+            Street = address.Street;
+            Cep = address.Cep;
+            Number = address.Number;
+            Complement = address.Complement;
         }
 
-        public void Update(AdressDTO adress)
+        public void Update(AddressDTO address)
         {
-            Street = adress.Street;
-            Cep = adress.Cep;
-            Number = adress.Number;
-            Complement = adress.Complement;
+            Street = address.Street;
+            Cep = address.Cep;
+            Number = address.Number;
+            Complement = address.Complement;
 
         }
 

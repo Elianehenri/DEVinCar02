@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace DEVinCar.Domain.Interfaces.Repositories
 {
-   public interface IAddressPatchRepositorio
+    public interface IAddressPatchRepositorio
     {
-        IList<Address> ObterTodos();//GetAll
-        Address ObterPorId(int id);//getById
-        void Inserir(Address adress);//insert
-        void Excluir(Address adress);//delete
-        void Atualizar(Address adress);//update
+        IList<Address> ObterTodos();
+        Address ObterPorId(int id);
+        void Inserir(Address adress);
+        void Excluir(Address adress);
+        void Atualizar(Address adress);
+        IQueryable<Address> Query();
     }
 }

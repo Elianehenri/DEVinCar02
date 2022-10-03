@@ -6,10 +6,8 @@ namespace DEVinCar.Domain.Interfaces.Services
 {
     public interface IDeliveryService
     {
-        IList<Delivery> ObterTodos();
+        IList<Delivery> ObterTodos(int? addressId, int? saleId);//int? id, 
         DeliveryDTO ObterPorId(int id);
-        void Inserir(DeliveryDTO delivery);
-        void Excluir(int id);
-        void Atualizar(DeliveryDTO delivery);
+        
     }
 }

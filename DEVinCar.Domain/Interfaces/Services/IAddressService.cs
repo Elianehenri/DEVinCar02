@@ -4,12 +4,16 @@ using DEVinCar.Domain.Models;
 
 namespace DEVinCar.Domain.Interfaces.Services
 {
-    public  interface IAddressService
+    public interface IAddressService
     {
-        IList<Address> ObterTodos();
-        AdressDTO ObterPorId(int id);
-        void Inserir(AdressDTO adress);
+        IList<Address> ObterTodos(
+          int? cityId,
+          int? stateId,
+          string street,
+          string cep);
+        AddressDTO ObterPorId(int id);
         void Excluir(int id);
-        void Atualizar(AdressDTO adress);
+        void Inserir(AddressDTO adress);
+
     }
 }

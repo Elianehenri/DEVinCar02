@@ -21,14 +21,14 @@ namespace DEVinCar.Domain.Models
 
         public Car(CarDTO car)
         {
-            Id = car.Id;
+           //Id = car.Id;
             Name = car.Name;
             SuggestedPrice = car.SuggestedPrice;
         }
 
         public void Update(CarDTO car)
         {
-            Id = car.Id;
+            //Id = car.Id;
             Name = car.Name;
             SuggestedPrice = car.SuggestedPrice;
         }

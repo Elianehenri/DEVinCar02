@@ -42,5 +42,10 @@ namespace DEVinCar.Infra.DataBase.Repositories
         {
             _contexto.Set<TEntity>().Remove(entity);
         }
+
+        public IQueryable<TEntity>Query()
+        {
+            return _contexto.Set<TEntity>().AsQueryable();
+        }
     }
 }

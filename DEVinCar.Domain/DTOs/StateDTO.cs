@@ -5,7 +5,7 @@ using System.Xml.Linq;
 namespace DEVinCar.Domain.DTOs {
     public class StateDTO {
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         [Required(ErrorMessage ="The Name is required.")]
         [MaxLength(100,ErrorMessage= "State name must be a maximum of 100 characters.")]
         public string Name { get; set; }
@@ -16,6 +16,14 @@ namespace DEVinCar.Domain.DTOs {
         public StateDTO()
         {
         }
+
+        public StateDTO(string name, string initials)
+        {
+           
+            Name = name;
+            Initials = initials;
+        }
+
         public StateDTO(State state)
         {
             Name = state.Name;

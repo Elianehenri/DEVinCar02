@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DEVinCar.Domain.Exceptions
 {
-    public class DuplicadoException : Exception
+    public  class NaoExisteException :Exception
     {
-        public DuplicadoException(string nome) : base(nome)
+        public NaoExisteException(string message) : base(message)
         {
-           
+
         }
-    }
+}
 }

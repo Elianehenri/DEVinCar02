@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DEVinCar.Infra.Database;
-using DEVinCar.Domain.Models;
+using DEVinCar.Domain.Services;
 
 namespace DEVinCar.Api.Controllers
 {
@@ -9,34 +9,28 @@ namespace DEVinCar.Api.Controllers
     public class DeliverController : ControllerBase
     {
         private readonly DevInCarDbContext _context;
-        public DeliverController(DevInCarDbContext context)
+        private readonly DeliveryService _deliveryService;
+
+        public DeliverController(DevInCarDbContext context, DeliveryService deliveryService)
         {
             _context = context;
+            _deliveryService = deliveryService;
         }
 
         [HttpGet]
-        public ActionResult<Delivery> Get(
+        public ActionResult Get(
         [FromQuery] int? addressId,
         [FromQuery] int? saleId)
         {
-            var query = _context.Deliveries.AsQueryable();
+            var deliveries = _deliveryService.ObterTodos(addressId, saleId);
 
-            if (addressId.HasValue)
-            {
-                query = query.Where(a => a.AddressId == addressId);
-            }
 
-            if (saleId.HasValue)
-            {
-                query = query.Where(s => s.SaleId == saleId);
-            }
-                      
-            if (!query.ToList().Any())
+            if (!deliveries.Any())
             {
                 return NoContent();
             }
 
-            return Ok(query.ToList());
+            return Ok(deliveries);
        
         }
     }
