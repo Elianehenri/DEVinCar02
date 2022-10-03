@@ -20,9 +20,9 @@ namespace DEVinCar.Infra.DataBase.Repositories
             return _contexto.Users.Where(u => u.Name == nome).ToList();
         }
 
-        public User ObterPorEmail(string email)
+        public User ObterPorEmail(string email, string password)
         {
-            return _contexto.Users.FirstOrDefault(u => u.Email == email);
+            return _contexto.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DEVinCar.Domain.Interfaces.Repositories
         void Excluir(User user);
         void Atualizar(User user);
         IQueryable<User> Query ();
-        public User ObterPorEmail(string email);
+        public User ObterPorEmail(string email, string password);
 
     }
 }
