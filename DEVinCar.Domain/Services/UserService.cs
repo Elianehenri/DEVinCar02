@@ -33,7 +33,7 @@ namespace DEVinCar.Domain.Services
 
         public void Inserir(UserDTO user)
         {
-            var oldUser = _userRepositorio.ObterPorEmail(user.Email);
+            var oldUser = _userRepositorio.ObterPorEmail(user.Email,user.Password);
 
             if (oldUser != null)
             {

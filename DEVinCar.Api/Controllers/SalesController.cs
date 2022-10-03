@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using DEVinCar.Infra.Database;
 using DEVinCar.Domain.ViewModels;
 using DEVinCar.Domain.DTOs;
