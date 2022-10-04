@@ -1,4 +1,5 @@
 using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Enums;
 
 namespace DEVinCar.Domain.Models
 {
@@ -9,6 +10,7 @@ namespace DEVinCar.Domain.Models
         public string Password {  get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
+        public Permissoes Role { get; set; }
 
         public User()
         {
@@ -29,6 +31,16 @@ namespace DEVinCar.Domain.Models
             Email = user.Email;
             Password = user.Password;
             BirthDate = user.BirthDate;
+        }
+
+        public User(int id, string email, string password, string name, DateTime birthDate, Permissoes role)
+        {
+            Id = id;
+            Email = email;
+            Password = password;
+            Name = name;
+            BirthDate = birthDate;
+            Role = role;
         }
 
         public void Update(UserDTO user)

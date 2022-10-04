@@ -2,12 +2,14 @@
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinCar.Api.Controllers;
 
 [ApiController]
 [Route("api/car")]
+[Authorize(Roles = "Gerente")]
 public class CarController : ControllerBase
 {
    
@@ -18,17 +20,23 @@ public class CarController : ControllerBase
        
         _carService = carService;
     }
-    
+
+
+    [Authorize(Roles = "Gerente")]
     [HttpGet("{id}")]
+    
     public ActionResult<Car> GetPorId(
         [FromRoute] int id)
     {
+       
         var car = _carService.ObterPorId(id);
         if (car == null) return NotFound();
         return Ok(car);
     }
 
+    [Authorize(Roles = "Gerente")]
     [HttpGet]
+    
     public ActionResult<List<Car>> Get(
         [FromQuery] string name,
         [FromQuery] decimal? priceMin,
@@ -42,7 +50,7 @@ public class CarController : ControllerBase
         }
         return Ok(cars);
     }
-
+    [Authorize(Roles = "Gerente")]
     [HttpPost]
     public ActionResult<Car> Post(
         [FromBody] CarDTO car
@@ -52,7 +60,7 @@ public class CarController : ControllerBase
         _carService.Inserir(car); 
         return Created("api/car", car);
     }
-
+    [Authorize(Roles = "Gerente")]
     [HttpDelete("{id}")]
     public ActionResult Delete(
         [FromRoute] int id)
@@ -63,7 +71,7 @@ public class CarController : ControllerBase
             return StatusCode(StatusCodes.Status204NoContent);
 
     }
-
+    [Authorize(Roles = "Gerente")]
     [HttpPut("{id}")]
     public ActionResult<Car> Put(
         [FromBody] CarDTO car,
