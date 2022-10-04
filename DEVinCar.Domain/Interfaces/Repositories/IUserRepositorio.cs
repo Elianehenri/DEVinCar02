@@ -12,7 +12,7 @@ namespace DEVinCar.Domain.Interfaces.Repositories
         void Excluir(User user);
         void Atualizar(User user);
         IQueryable<User> Query ();
-        public User ObterPorLogin(string email, string password);//LoginDTO loginDTO
+        public User ObterPorLogin(string email, string password);
 
         public User ObterPorEmail(string email);
 

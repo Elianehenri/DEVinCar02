@@ -1,9 +1,11 @@
 
 using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Enums;
 using DEVinCar.Domain.Interfaces.Services;
 using DEVinCar.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Extensions;
 
 namespace DEVinCar.Api.Controllers;
 
@@ -24,14 +26,20 @@ public class CarController : ControllerBase
 
     [Authorize(Roles = "Gerente")]
     [HttpGet("{id}")]
-    
     public ActionResult<Car> GetPorId(
         [FromRoute] int id)
     {
-       
+
         var car = _carService.ObterPorId(id);
-        if (car == null) return NotFound();
-        return Ok(car);
+        if (User.IsInRole(Permissoes.Gerente.GetDisplayName()))
+        {
+           
+            if (car == null) return NotFound();
+            return Ok(car);
+        }
+        return Ok();
+        
+        
     }
 
     [Authorize(Roles = "Gerente")]
@@ -44,9 +52,13 @@ public class CarController : ControllerBase
     )
     {
         var cars = _carService.ObterTodos(name, priceMin, priceMax);
-        if (!cars.Any())
+        if (User.IsInRole(Permissoes.Gerente.GetDisplayName()))
         {
-            return NoContent();
+            if (!cars.Any())
+            {
+                return NoContent();
+            }
+            return StatusCode(StatusCodes.Status401Unauthorized);
         }
         return Ok(cars);
     }

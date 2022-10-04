@@ -3,9 +3,10 @@ using DEVinCar.Infra.Database;
 using DEVinCar.Domain.ViewModels;
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Models;
-
 using DEVinCar.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
+using DEVinCar.Domain.Enums;
+using Microsoft.OpenApi.Extensions;
 
 namespace DEVinCar.Api.Controllers;
 
@@ -41,8 +42,14 @@ public class SalesController : ControllerBase
        [FromRoute] int saleId
        )
     {
+        var ehGerente = User.IsInRole(Permissoes.Gerente.GetDisplayName());
+        if (ehGerente)
+            return Ok("Área exclusiva de Gerente. Bem-vindo,Vendedor");
+        else
+            return Ok("Área exclusiva de Vendedor, Bem-vindo Gerente");
+
         _saleService.Inserir(saleCarDTO);
-        return Created("", saleCarDTO.SaleId);
+        return Created("api/sales/{saleId}/item", saleCarDTO.SaleId);
        
         
     }

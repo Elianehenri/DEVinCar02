@@ -87,11 +87,12 @@ namespace DEVinCar.Domain.Services
             return _saleRepositorio.GetSalesBySellerId(id);
         }
 
-        public User ObterPorLogin(string email, string password)//LoginDTO loginDTO
+        public User ObterPorLogin( string email, string password)
         {
-            var user = _userRepositorio.ObterPorLogin( email,  password);
-                
+            var user = _userRepositorio.ObterPorLogin(email, password);
+
             return user;
+
         }
     }
     }
