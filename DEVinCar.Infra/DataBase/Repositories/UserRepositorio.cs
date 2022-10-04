@@ -26,9 +26,9 @@ namespace DEVinCar.Infra.DataBase.Repositories
         }
 
 
-        public User ObterPorLogin(string email, string password)//LoginDTO loginDTO
+        public  User ObterPorLogin( string email, string password)
         {
-            return _contexto.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            return _contexto.Users.FirstOrDefault(u => u.Email == email  && u.Password ==  password);
         }
     }
 }
