@@ -17,7 +17,8 @@ namespace DEVinCar.Domain.Interfaces.Services
         void Inserir(UserDTO user);
         void Excluir(int id);
         void Atualizar(UserDTO user);
-        
+        public User ObterPorLogin(string email, string password);
+
         IList<Sale> GetByIdBuy(int userId);
         IList<Sale> GetSalesBySellerId(int userId);
 

@@ -1,6 +1,7 @@
 ﻿using DEVinCar.Api.Services;
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Interfaces.Repositories;
+using DEVinCar.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -9,19 +10,20 @@ namespace DEVinCar.Api.Controllers
 {
     public class AutenticacoesController: ControllerBase
     {
-        private readonly IUserRepositorio _userRepositorio;
-        public AutenticacoesController(IUserRepositorio userRepositorio)
+        private readonly IUserService _userService;
+
+        public AutenticacoesController(IUserService userService)
         {
-            _userRepositorio = userRepositorio;
+            _userService = userService;
         }
 
         [HttpPost]
         [Route("login")]
         public IActionResult Login(
-          [FromBody] UserDTO userDto)
+          [FromBody] LoginDTO loginDTO)
         {
 
-            var user = _userRepositorio.ObterPorEmail(userDto.Email, userDto.Password);
+            var user = _userService.ObterPorLogin(loginDTO.Email, loginDTO.Password);
 
             if (user == null) return Unauthorized();
 

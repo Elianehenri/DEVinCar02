@@ -1,4 +1,5 @@
-﻿using DEVinCar.Domain.Models;
+﻿using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Models;
 
 
 namespace DEVinCar.Domain.Interfaces.Repositories
@@ -11,7 +12,9 @@ namespace DEVinCar.Domain.Interfaces.Repositories
         void Excluir(User user);
         void Atualizar(User user);
         IQueryable<User> Query ();
-        public User ObterPorEmail(string email, string password);
+        public User ObterPorLogin(string email, string password);//LoginDTO loginDTO
+
+        public User ObterPorEmail(string email);
 
     }
 }

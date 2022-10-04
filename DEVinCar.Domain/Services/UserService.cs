@@ -33,7 +33,7 @@ namespace DEVinCar.Domain.Services
 
         public void Inserir(UserDTO user)
         {
-            var oldUser = _userRepositorio.ObterPorEmail(user.Email,user.Password);
+            var oldUser = _userRepositorio.ObterPorEmail(user.Email);
 
             if (oldUser != null)
             {
@@ -87,6 +87,12 @@ namespace DEVinCar.Domain.Services
             return _saleRepositorio.GetSalesBySellerId(id);
         }
 
+        public User ObterPorLogin(string email, string password)//LoginDTO loginDTO
+        {
+            var user = _userRepositorio.ObterPorLogin( email,  password);
+                
+            return user;
+        }
     }
     }
 

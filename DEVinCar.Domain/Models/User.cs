@@ -12,6 +12,7 @@ namespace DEVinCar.Domain.Models
         public DateTime BirthDate { get; set; }
         public Permissoes Role { get; set; }
 
+
         public User()
         {
             
