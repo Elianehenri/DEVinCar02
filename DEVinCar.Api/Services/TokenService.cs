@@ -1,6 +1,7 @@
 ﻿using DEVinCar.Api.Security;
 using DEVinCar.Domain.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Extensions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -16,7 +17,7 @@ namespace DEVinCar.Api.Services
              {
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Email, user.Email),
-                    //new Claim(ClaimTypes.Role, user.Role.GetDisplayName())
+                    new Claim(ClaimTypes.Role, user.Role.GetDisplayName())
              };
 
             return GenerateTokenFromClaims(claims);

@@ -1,4 +1,5 @@
-﻿using DEVinCar.Domain.Interfaces.Repositories;
+﻿using DEVinCar.Domain.DTOs;
+using DEVinCar.Domain.Interfaces.Repositories;
 using DEVinCar.Domain.Models;
 using DEVinCar.Infra.Database;
 using System;
@@ -19,8 +20,13 @@ namespace DEVinCar.Infra.DataBase.Repositories
         {
             return _contexto.Users.Where(u => u.Name == nome).ToList();
         }
+        public User ObterPorEmail(string email)
+        {
+            return _contexto.Users.FirstOrDefault(u => u.Email == email);
+        }
 
-        public User ObterPorEmail(string email, string password)
+
+        public User ObterPorLogin(string email, string password)//LoginDTO loginDTO
         {
             return _contexto.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
