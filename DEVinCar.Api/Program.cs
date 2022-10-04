@@ -18,7 +18,7 @@ builder.Services.AddDbContext<DevInCarDbContext>();
 //repositorio
 RepositoryIoC.RegisterServices(builder.Services);
 //Service
-//ServiceIoc.RegisterServices(builder.Services);
+ServiceIoc.RegisterServices(builder.Services);
 
 
 builder.Services.AddControllers();
@@ -47,15 +47,15 @@ builder.Services.AddAuthentication(x =>//authentication
     };
 });
 //Service
-builder.Services.AddScoped<ICarService, CarService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<ISaleService, SaleService>();
-builder.Services.AddScoped<ISaleCarService, SaleCarService>();
-builder.Services.AddScoped<ICityService, CityService>();
-builder.Services.AddScoped<IStateService, StateService>();
-builder.Services.AddScoped<IDeliveryService, DeliveryService>();
-builder.Services.AddScoped<IAddressPatchService, AddressPatchService>();
+//builder.Services.AddScoped<ICarService, CarService>();
+//builder.Services.AddScoped<IUserService, UserService>();
+//builder.Services.AddScoped<IAddressService, AddressService>();
+//builder.Services.AddScoped<ISaleService, SaleService>();
+//builder.Services.AddScoped<ISaleCarService, SaleCarService>();
+//builder.Services.AddScoped<ICityService, CityService>();
+//builder.Services.AddScoped<IStateService, StateService>();
+//builder.Services.AddScoped<IDeliveryService, DeliveryService>();
+//builder.Services.AddScoped<IAddressPatchService, AddressPatchService>();
 
 
 
@@ -70,7 +70,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // comentando para conseguir trabalhar com Insomnia/Postman via http comum
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -5,7 +5,7 @@ using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Models;
 
 using DEVinCar.Domain.Interfaces.Services;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace DEVinCar.Api.Controllers;
 
@@ -33,7 +33,9 @@ public class SalesController : ControllerBase
        
     }
 
-    [HttpPost("{saleId}/item")]
+    [HttpPost]//("{saleId}/item")
+    [Route("api/sales/{saleId}/item")]
+   [Authorize(Roles = "Gerente,Vendedor")]
     public ActionResult<SaleCar> PostSale(
        [FromBody] SaleCarDTO saleCarDTO,
        [FromRoute] int saleId
@@ -42,7 +44,7 @@ public class SalesController : ControllerBase
         _saleService.Inserir(saleCarDTO);
         return Created("", saleCarDTO.SaleId);
        
-        return NotFound();
+        
     }
 
 
