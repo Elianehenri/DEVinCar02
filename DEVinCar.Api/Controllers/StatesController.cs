@@ -17,19 +17,16 @@ namespace DEVinCar.Api.Controllers;
 [Route("api/state")]
 public class StatesController : ControllerBase
 {
-    //private readonly DevInCarDbContext _context;
+  
     private readonly IStateService _stateService;
     private readonly ICityService _cityService;
 
     public StatesController(DevInCarDbContext context, IStateService stateService, ICityService cityService)
     {
-        //_context = context;
+      
         _stateService = stateService;
         _cityService = cityService;
     }
-
-
-   
 
 
 
@@ -88,7 +85,7 @@ public class StatesController : ControllerBase
     }
 
     [HttpGet("{stateId}")]
-    public ActionResult<GetStateByIdViewModel> GetStateById(//ObterPorId
+    public ActionResult<GetStateByIdViewModel> GetStateById(
     [FromRoute] int stateId
         )
     {
@@ -104,7 +101,7 @@ public class StatesController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult Get(//ObterPorNome
+    public ActionResult Get(
         [FromQuery] string name)
     {
        var states =_stateService.ObterPorNome(name);    
@@ -113,9 +110,9 @@ public class StatesController : ControllerBase
     }
 
     [HttpGet("{stateId}/city")]
-    public ActionResult<GetCityByIdViewModel> ObterPorNomeCity(// ObterPorNomeCity
+    public ActionResult<GetCityByIdViewModel> ObterPorNomeCity(
         [FromRoute] int stateId,
-        [FromQuery] string? name)
+        [FromQuery] string name)
 
     {
         var citys = _stateService.ObterPorNomeCity(stateId,name);

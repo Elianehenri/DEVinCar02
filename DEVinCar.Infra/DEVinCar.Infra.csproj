@@ -19,8 +19,4 @@
     <ProjectReference Include="..\DEVinCar.Domain\DEVinCar.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataBase\Migrations\" />
-  </ItemGroup>
-
 </Project>

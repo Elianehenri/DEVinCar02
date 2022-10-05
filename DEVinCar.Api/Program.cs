@@ -3,13 +3,9 @@ using System.Text.Json.Serialization;
 using DEVinCar.Api.Confi;
 using DEVinCar.Api.Confi.IOC;
 using DEVinCar.Api.Security;
-using DEVinCar.Domain.Interfaces.Repositories;
-using DEVinCar.Domain.Interfaces.Services;
-using DEVinCar.Domain.Services;
-using DEVinCar.Infra;
 using DEVinCar.Infra.Database;
-using DEVinCar.Infra.DataBase.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -28,36 +24,55 @@ builder.Services.AddScoped(typeof(CacheService<>));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 
-////
-///
-builder.Services.AddSwaggerGen(c => {
-c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+
+
+builder.Services.AddSwaggerGen(c =>
 {
-    Description = @"JWT Authorization header using the Bearer scheme. 
+
+    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. 
                 Escreva 'Bearer' [espaço] e o token gerado no login na caixa abaixo.
                Exemplo: 'Bearer 12345abcdef'",
-    Name = "Authorization",
-    In = ParameterLocation.Header,
-    Type = SecuritySchemeType.ApiKey,
-    Scheme = "Bearer"
-});
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                  {
-                  {
-                   new OpenApiSecurityScheme
-                    {
-                      Reference = new OpenApiReference
-                      {
-                      Type = ReferenceType.SecurityScheme,
-                      Id = JwtBearerDefaults.AuthenticationScheme
-                    },
-                    },
-                 new List<string>()
-                  }
-                   });
+    {
+        {
+           new OpenApiSecurityScheme
+           {
+               Reference = new OpenApiReference
+               {
+                Type = ReferenceType.SecurityScheme,
+                 Id = JwtBearerDefaults.AuthenticationScheme
+               },
+           },
+               new List<string>()
+        }
+    });
+c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Escola API",
+        Version = "v1.0",
+        Contact = new OpenApiContact
+        {
+            Name = "Eliane",
+            Email = "eliane@eliane.com.br"
+        }
+    });
+});
+
+builder.Services.AddMvc(config =>
+{
+    config.ReturnHttpNotAcceptable = true;
+    config.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+    config.InputFormatters.Add(new XmlDataContractSerializerInputFormatter(config));
 });
 
 //jwt/Autenticaçao
@@ -112,5 +127,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseMiddleware<ErrorMiddleware>();
 
 app.Run();
