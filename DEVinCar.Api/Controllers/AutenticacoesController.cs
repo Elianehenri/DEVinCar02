@@ -37,6 +37,7 @@ namespace DEVinCar.Api.Controllers
                 refreshToken
             });
         }
+
         [HttpPost]
         [Route("refresh")]
         [AllowAnonymous]
@@ -62,6 +63,7 @@ namespace DEVinCar.Api.Controllers
             });
 
         }
+
         [HttpGet]
         [Route("list-refresh-tokens")]
         public IActionResult ListRefreshTokens()

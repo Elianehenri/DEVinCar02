@@ -48,7 +48,6 @@ public class AddressesController : ControllerBase
         [FromRoute] int addressId,
         [FromBody] AddressPatchDTO addressPatchDTO)
     {
-
       
         var address = _addressPatchService.ObterTodos(addressId, addressPatchDTO);
 
@@ -59,6 +58,7 @@ public class AddressesController : ControllerBase
         return Ok(address);
 
     }
+
         [HttpDelete("{id}")]
 
         public ActionResult Excluir(
@@ -74,9 +74,7 @@ public class AddressesController : ControllerBase
 
             _addressPatchService.Excluir(id);
 
-
             return StatusCode(StatusCodes.Status204NoContent);
-
 
         } 
 }

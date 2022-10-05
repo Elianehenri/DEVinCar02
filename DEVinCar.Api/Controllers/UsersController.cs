@@ -26,7 +26,7 @@ public class UserController : ControllerBase
 
 
     //Api/User?birthDateMax=12/12/1999
-    //[Authorize]
+    [Authorize]
     [HttpGet]
       public ActionResult<List<User>> Get(
        [FromQuery] string name,
@@ -43,7 +43,7 @@ public class UserController : ControllerBase
        
     }
 
-   // [Authorize]
+    [Authorize]
     [HttpGet("{id}")]
     public ActionResult<User> GetById(
         [FromRoute] int id
@@ -53,7 +53,7 @@ public class UserController : ControllerBase
         if (user == null) return NotFound();
         return Ok(user);
     }
-   // [Authorize]
+    [Authorize]
     [HttpGet("{userId}/buy")]
     public ActionResult GetByIdBuy(
        [FromRoute] int userId)
@@ -67,7 +67,7 @@ public class UserController : ControllerBase
         }
         return Ok(sales.ToList());
     }
-   // [Authorize]
+   [Authorize]
     [HttpGet("{userId}/sales")]
     public ActionResult GetSalesBySellerId(
        [FromRoute] int userId)
@@ -80,7 +80,7 @@ public class UserController : ControllerBase
         }
         return Ok(sales.ToList());
     }
-   // [Authorize]
+   [Authorize]
     [HttpPost]
     public ActionResult Post(
         [FromBody] UserDTO user)
@@ -89,7 +89,7 @@ public class UserController : ControllerBase
         return Created("api/users", user.Id);
         
     }
-   // [Authorize]
+   [Authorize]
     [HttpPost("{userId}/sales")]
     public ActionResult<Sale> PostSaleUserId(
            [FromRoute] int userId,
@@ -100,7 +100,7 @@ public class UserController : ControllerBase
           return Created("api/sale", userId);
 
     }
-   // [Authorize]
+   [Authorize]
     [HttpPost("{userId}/buy")]
 
     public ActionResult<Sale> PostBuyUserId(
@@ -114,7 +114,7 @@ public class UserController : ControllerBase
        
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpPut("{id}")]
     public ActionResult<Car> Atualizar(
         [FromBody] UserDTO user,
@@ -123,16 +123,11 @@ public class UserController : ControllerBase
 
         user.Id = id;
         _userService.Atualizar(user);
-        //_cacheServicePorId.Remove($"{materiaId}");
-
-        //_cacheServicePorNome.Remove(materia.Nome);
-        // var car = _carService.ObterPorId(id);
-        ////var name = _carService.ObterPorNome(car.Name);
-        // return Ok();
+      
         return StatusCode(StatusCodes.Status201Created);
     }
 
-    //[Authorize]
+    [Authorize]
     [HttpDelete("{id}")]
     public ActionResult Excluir(
     [FromRoute] int id

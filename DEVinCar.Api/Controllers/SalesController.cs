@@ -56,7 +56,6 @@ public class SalesController : ControllerBase
 
 
     [HttpPost("{saleId}/deliver")]
-
     public ActionResult PostDeliver(
    [FromRoute] int saleId,
    [FromBody] DeliveryDTO deliveryDTO)
@@ -103,6 +102,7 @@ public class SalesController : ControllerBase
         }
 
     }
+
         [HttpPatch("{saleId}/car/{carId}/price/{unitPrice}")]
         public ActionResult<SaleCar> Patch(
            [FromRoute] int saleId,
