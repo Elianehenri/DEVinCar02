@@ -21,6 +21,7 @@ namespace DEVinCar.Domain.Services
             var carDb = _carRepositorio.ObterPorId(car.Id);
             carDb.Update(car);
             _carRepositorio.Atualizar(carDb);
+
         }
 
         public void Excluir(int id)

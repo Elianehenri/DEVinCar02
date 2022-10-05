@@ -1,4 +1,5 @@
 
+using DEVinCar.Api.Confi;
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Enums;
 using DEVinCar.Domain.Interfaces.Services;
@@ -6,6 +7,7 @@ using DEVinCar.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
+using System;
 
 namespace DEVinCar.Api.Controllers;
 
@@ -14,15 +16,16 @@ namespace DEVinCar.Api.Controllers;
 [Authorize(Roles = "Gerente")]
 public class CarController : ControllerBase
 {
-   
+
     private readonly ICarService _carService;
+    private readonly CacheService<CarDTO> _carCache;
 
-    public CarController( ICarService carService)
+    public CarController(ICarService carService, CacheService<CarDTO> carCache)
     {
-       
+        carCache.Config("car", new TimeSpan(0, 2, 0));
         _carService = carService;
+        _carCache = carCache;
     }
-
 
     [Authorize(Roles = "Gerente")]
     [HttpGet("{id}")]
@@ -33,18 +36,25 @@ public class CarController : ControllerBase
         var car = _carService.ObterPorId(id);
         if (User.IsInRole(Permissoes.Gerente.GetDisplayName()))
         {
-           
+
             if (car == null) return NotFound();
-            return Ok(car);
+
+            if (!_carCache.TryGetValue($"{id}", out car))
+            {
+                car = _carService.ObterPorId(id);
+                _carCache.Set(id.ToString(), car);
+               // car.Links = GetHateoas(car, uri);
+            }
         }
-        return Ok();
-        
-        
+
+        return Ok(car);
+
+
     }
 
     [Authorize(Roles = "Gerente")]
     [HttpGet]
-    
+
     public ActionResult<List<Car>> Get(
         [FromQuery] string name,
         [FromQuery] decimal? priceMin,
@@ -62,56 +72,46 @@ public class CarController : ControllerBase
         }
         return Ok(cars);
     }
+
+
     [Authorize(Roles = "Gerente")]
     [HttpPost]
     public ActionResult<Car> Post(
         [FromBody] CarDTO car
     )
     {
-       
-        _carService.Inserir(car); 
+
+        _carService.Inserir(car);
         return Created("api/car", car);
     }
+
+
     [Authorize(Roles = "Gerente")]
     [HttpDelete("{id}")]
     public ActionResult Delete(
         [FromRoute] int id)
     {
-       
-          _carService.Excluir(id);
-           //_cacheServicePorId.Remove($"{id}");
-            return StatusCode(StatusCodes.Status204NoContent);
+
+        _carService.Excluir(id);
+        _carCache.Remove($"{id}");
+        return StatusCode(StatusCodes.Status204NoContent);
 
     }
+
+
     [Authorize(Roles = "Gerente")]
     [HttpPut("{id}")]
     public ActionResult<Car> Put(
         [FromBody] CarDTO car,
-        [FromRoute] int id  )
+        [FromRoute] int id)
     {
-
-        //car.Id = id;
+        
+        car.Id = id;
         _carService.Atualizar(car);
-       // _cacheServicePorId.Remove($"{materiaId}");
+        _carCache.Remove($"{car}");
+  
 
-        //_cacheServicePorNome.Remove(materia.Nome);
-        //var car = _carService.ObterPorId(id);
-        var name = _carService.ObterPorNome(car.Name);
-      
         return StatusCode(StatusCodes.Status201Created);
-
-        //var oldcar = _carService.Atualizar(car, id)
-        //var name = _carService.Any(c => c.Name == car.Name && c.Id != carId);
-        //if (car == null)
-        //    return NotFound();
-        //if (oldcar.Name.Equals(null) || oldcar.SuggestedPrice.Equals(null))
-        //    return BadRequest();
-        //if (car.SuggestedPrice <= 0)
-        //    return BadRequest();
-        //if (name)
-        //    return BadRequest();
-        //car.Name = car.Name;
-        //car.SuggestedPrice = car.SuggestedPrice;
 
     }
 }

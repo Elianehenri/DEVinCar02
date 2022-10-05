@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json.Serialization;
+using DEVinCar.Api.Confi;
 using DEVinCar.Api.Confi.IOC;
 using DEVinCar.Api.Security;
 using DEVinCar.Domain.Interfaces.Repositories;
@@ -10,6 +11,7 @@ using DEVinCar.Infra.Database;
 using DEVinCar.Infra.DataBase.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +22,43 @@ RepositoryIoC.RegisterServices(builder.Services);
 //Service
 ServiceIoc.RegisterServices(builder.Services);
 
+//cache
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped(typeof(CacheService<>));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+
+
+////
+///
+builder.Services.AddSwaggerGen(c => {
+c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+{
+    Description = @"JWT Authorization header using the Bearer scheme. 
+                Escreva 'Bearer' [espaço] e o token gerado no login na caixa abaixo.
+               Exemplo: 'Bearer 12345abcdef'",
+    Name = "Authorization",
+    In = ParameterLocation.Header,
+    Type = SecuritySchemeType.ApiKey,
+    Scheme = "Bearer"
+});
+c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                  {
+                  {
+                   new OpenApiSecurityScheme
+                    {
+                      Reference = new OpenApiReference
+                      {
+                      Type = ReferenceType.SecurityScheme,
+                      Id = JwtBearerDefaults.AuthenticationScheme
+                    },
+                    },
+                 new List<string>()
+                  }
+                   });
+});
 
 //jwt/Autenticaçao
 var key = Encoding.ASCII.GetBytes(Settings.Secret);
@@ -46,28 +81,29 @@ builder.Services.AddAuthentication(x =>//authentication
         ValidateAudience = false
     };
 });
-//Service
-//builder.Services.AddScoped<ICarService, CarService>();
-//builder.Services.AddScoped<IUserService, UserService>();
-//builder.Services.AddScoped<IAddressService, AddressService>();
-//builder.Services.AddScoped<ISaleService, SaleService>();
-//builder.Services.AddScoped<ISaleCarService, SaleCarService>();
-//builder.Services.AddScoped<ICityService, CityService>();
-//builder.Services.AddScoped<IStateService, StateService>();
-//builder.Services.AddScoped<IDeliveryService, DeliveryService>();
-//builder.Services.AddScoped<IAddressPatchService, AddressPatchService>();
-
 
 
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
+
 
 // comentando para conseguir trabalhar com Insomnia/Postman via http comum
 app.UseHttpsRedirection();
