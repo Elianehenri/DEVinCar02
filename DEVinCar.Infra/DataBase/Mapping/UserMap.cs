@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DEVinCar.Infra.DataBase.Mapping
 {
-    public class UserMap : IEntityTypeConfiguration<User> 
+    public class UserMap : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
@@ -43,15 +43,15 @@ namespace DEVinCar.Infra.DataBase.Mapping
             builder
                 .Property(u => u.BirthDate);
             builder
-                .HasData(new[] {
+                         .HasData(new[] {
                     new User(1, "jose@email.com", "123456", "Jose", new DateTime(2000, 12, 10),Permissoes.Gerente),
                     new User(2, "andrea@email.com", "123456", "Andrea", new DateTime(1999, 05, 11),Permissoes.Comprador),
                     new User(3, "adao@email.com", "123456", "Adao", new DateTime(2005, 09, 02),Permissoes.Vendedor),
                     new User(4, "monique@email.com", "123456", "Monique", new DateTime(2001, 06, 07),Permissoes.Vendedor),
-                    });
-            
+                             });
+
 
         }
     }
-    
+
 }

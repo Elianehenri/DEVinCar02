@@ -29,6 +29,8 @@ namespace DEVinCar.Infra.DataBase.Mapping
             builder.HasOne(u => u.UserSeller)
                 .WithMany()
                 .HasForeignKey(u => u.SellerId);
+
+           
         }
     }
 }

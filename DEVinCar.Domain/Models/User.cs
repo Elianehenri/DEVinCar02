@@ -1,5 +1,6 @@
 using DEVinCar.Domain.DTOs;
 using DEVinCar.Domain.Enums;
+using System.Data;
 
 namespace DEVinCar.Domain.Models
 {
@@ -24,6 +25,7 @@ namespace DEVinCar.Domain.Models
             Password = password;
             Name = name;
             BirthDate = birthDate;
+
         }
 
         public User(UserDTO user)
@@ -32,6 +34,8 @@ namespace DEVinCar.Domain.Models
             Email = user.Email;
             Password = user.Password;
             BirthDate = user.BirthDate;
+            Role = user.Role;
+
         }
 
         public User(int id, string email, string password, string name, DateTime birthDate, Permissoes role)
@@ -50,6 +54,8 @@ namespace DEVinCar.Domain.Models
             Email = user.Email;
             Password = user.Password;
             BirthDate = user.BirthDate;
+            Role = user.Role;
+
         }
     }
 }
