@@ -28,7 +28,7 @@ public class UserController : ControllerBase
     //Api/User?birthDateMax=12/12/1999
     [Authorize]
     [HttpGet()]
-    [AllowAnonymous]
+ 
     public ActionResult Get(
        [FromQuery] string name,
        [FromQuery] DateTime? birthDateMax,
@@ -46,7 +46,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpGet("{id}")]
-    [AllowAnonymous]
+
     public ActionResult GetById(
         [FromRoute] int id
     )
@@ -58,7 +58,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpGet("{userId}/buy")]
-    [AllowAnonymous]
+
     public ActionResult GetByIdBuy(
        [FromRoute] int userId)
 
@@ -74,7 +74,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpGet("{userId}/sales")]
-    [AllowAnonymous]
+
     public ActionResult GetSalesBySellerId(
        [FromRoute] int userId)
     {
@@ -89,7 +89,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpPost]
-    [AllowAnonymous]
+  
     public ActionResult Post(
         [FromBody] UserDTO user)
     {
@@ -100,7 +100,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpPost("{userId}/sales")]
-    [AllowAnonymous]
+
     public ActionResult<Sale> PostSaleUserId(
            [FromRoute] int userId,
            [FromBody] SaleDTO saleDto)
@@ -113,7 +113,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpPost("{userId}/buy")]
-    [AllowAnonymous]
+
     public ActionResult<Sale> PostBuyUserId(
           [FromRoute] int userId,
           [FromBody] BuyDTO buyDto)
@@ -127,7 +127,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpPut("{id}")]
-    [AllowAnonymous]
+  
     public ActionResult<Car> Atualizar(
         [FromBody] UserDTO user,
         [FromRoute] int id)
@@ -141,7 +141,7 @@ public class UserController : ControllerBase
 
     [Authorize]
     [HttpDelete("{id}")]
-    [AllowAnonymous]
+  
     public ActionResult Excluir(
     [FromRoute] int id
 )
@@ -155,6 +155,7 @@ public class UserController : ControllerBase
 
         return StatusCode(StatusCodes.Status204NoContent);
     }
+
 
 }
 

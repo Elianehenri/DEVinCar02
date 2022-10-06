@@ -19,6 +19,7 @@ namespace DEVinCar.Api.Controllers
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public IActionResult Login(
           [FromBody] LoginDTO loginDTO)
         {
