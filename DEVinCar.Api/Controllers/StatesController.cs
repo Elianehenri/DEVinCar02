@@ -31,7 +31,7 @@ public class StatesController : ControllerBase
 
 
     [HttpPost("{stateId}/city")]
-    public ActionResult<int> PostCity(//ok 
+    public ActionResult<int> PostCity(
         [FromRoute] int stateId,
         [FromBody] CityDTO cityDTO)
     {
@@ -67,7 +67,7 @@ public class StatesController : ControllerBase
 
     [HttpGet("{stateId}/city/{cityId}")]
 
-    public ActionResult<GetCityByIdViewModel> GetCityById//ObterCityPorId
+    public ActionResult<GetCityByIdViewModel> GetCityById
     (
         [FromRoute] int stateId,
         [FromRoute] int cityId
