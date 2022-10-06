@@ -27,8 +27,9 @@ public class UserController : ControllerBase
 
     //Api/User?birthDateMax=12/12/1999
     [Authorize]
-    [HttpGet]
-      public ActionResult<List<User>> Get(
+    [HttpGet()]
+    [AllowAnonymous]
+    public ActionResult Get(
        [FromQuery] string name,
        [FromQuery] DateTime? birthDateMax,
        [FromQuery] DateTime? birthDateMin)
@@ -40,12 +41,13 @@ public class UserController : ControllerBase
             return NoContent();
         }
         return Ok(users);
-       
+
     }
 
     [Authorize]
     [HttpGet("{id}")]
-    public ActionResult<User> GetById(
+    [AllowAnonymous]
+    public ActionResult GetById(
         [FromRoute] int id
     )
     {
@@ -53,8 +55,10 @@ public class UserController : ControllerBase
         if (user == null) return NotFound();
         return Ok(user);
     }
+
     [Authorize]
     [HttpGet("{userId}/buy")]
+    [AllowAnonymous]
     public ActionResult GetByIdBuy(
        [FromRoute] int userId)
 
@@ -67,8 +71,10 @@ public class UserController : ControllerBase
         }
         return Ok(sales.ToList());
     }
-   [Authorize]
+
+    [Authorize]
     [HttpGet("{userId}/sales")]
+    [AllowAnonymous]
     public ActionResult GetSalesBySellerId(
        [FromRoute] int userId)
     {
@@ -80,29 +86,34 @@ public class UserController : ControllerBase
         }
         return Ok(sales.ToList());
     }
-   [Authorize]
+
+    [Authorize]
     [HttpPost]
+    [AllowAnonymous]
     public ActionResult Post(
         [FromBody] UserDTO user)
     {
         _userService.Inserir(user);
         return Created("api/users", user.Id);
-        
+
     }
-   [Authorize]
+
+    [Authorize]
     [HttpPost("{userId}/sales")]
+    [AllowAnonymous]
     public ActionResult<Sale> PostSaleUserId(
            [FromRoute] int userId,
            [FromBody] SaleDTO saleDto)
     {
         _saleService.Inserir(saleDto);
 
-          return Created("api/sale", userId);
+        return Created("api/sale", userId);
 
     }
-   [Authorize]
-    [HttpPost("{userId}/buy")]
 
+    [Authorize]
+    [HttpPost("{userId}/buy")]
+    [AllowAnonymous]
     public ActionResult<Sale> PostBuyUserId(
           [FromRoute] int userId,
           [FromBody] BuyDTO buyDto)
@@ -111,11 +122,12 @@ public class UserController : ControllerBase
         _saleService.Inserir(buyDto);
         return Created("api/user/{userId}/buy", userId);
 
-       
+
     }
 
     [Authorize]
     [HttpPut("{id}")]
+    [AllowAnonymous]
     public ActionResult<Car> Atualizar(
         [FromBody] UserDTO user,
         [FromRoute] int id)
@@ -123,16 +135,17 @@ public class UserController : ControllerBase
 
         user.Id = id;
         _userService.Atualizar(user);
-      
+
         return StatusCode(StatusCodes.Status201Created);
     }
 
     [Authorize]
     [HttpDelete("{id}")]
+    [AllowAnonymous]
     public ActionResult Excluir(
     [FromRoute] int id
 )
-    { 
+    {
         var user = _userService.ObterPorId(id);
         if (user == null)
         {
