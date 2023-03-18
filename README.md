@@ -8,8 +8,8 @@ Este projeto é referente ao projeto DEVinCar  desenvolvido no modulo 02 da Devi
 
 ## Aprendizado
 Atuar em projeto .Net com Entity Framework em C#, conectando em base SQL Server
-cache
-middleware
+* cache
+* middleware
 content negotiation
 paginação
 autenticacao jwt
