@@ -33,9 +33,10 @@ $ git clone https://github.com/Elianehenri/DEVinCar02
     
     ```bash
    "ConnectionStrings": {
-    "DEV_IN_CAR": "Server=localhost\\SQLEXPRESS;Database=BD_DEVINCAR;Trusted_Connection=True;"
+    "DEV_IN_CAR": "Server=localhost\\SQLEXPRESS;Database=BD_DEVINCAR;Trusted_Connection=True;
+    "
   }
-    ```
+  ```
 <li>Após o comando executado, atualize o Banco de Dados</li>
 
 ```bash
