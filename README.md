@@ -31,12 +31,13 @@ $ git clone https://github.com/Elianehenri/DEVinCar02
 
   <li> No arquivo <b style="color:#7b9eeb">appsettings.json</b> e adicione a ConnectionString, seguindo o modelo abaixo: <br>
     
-    ```bash
+  ```bash
    "ConnectionStrings": {
     "DEV_IN_CAR": "Server=localhost\\SQLEXPRESS;Database=BD_DEVINCAR;Trusted_Connection=True;
     "
   }
   ```
+  </li>
 <li>Após o comando executado, atualize o Banco de Dados</li>
 
 ```bash
