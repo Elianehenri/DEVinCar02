@@ -19,8 +19,8 @@ Este projeto é referente ao projeto DEVinCar  desenvolvido no modulo 02 da Devi
 
 ## Como executar
 
-1 - Baixe o projeto para sua máquina com 
-`$ git clone https://github.com/Elianehenri/DEVinCar02` 
+1 - Baixe o projeto para sua máquina clonando o projeto
+* `$ git clone https://github.com/Elianehenri/DEVinCar02` 
 2 - conecte a sua máquina com um SQL Server local e atualize-o rodando no diretório do projeto o comando 
 `$ dotnet ef database update`
 Aí você terá o SQL Server atualizado e o projeto está pronto para ser executado com `dotnet run`. Por padrão a rota será: `https://localhost:7019/` e para acessar o swaggerUI `https://localhost:7019/swagger/index.html`.
