@@ -15,19 +15,41 @@ Este projeto é referente ao projeto DEVinCar  desenvolvido no modulo 02 da Devi
 * autenticacao jwt
 
 
+### Pré-requisitos
+Para rodar o projeto em sua máquina, você vai precisar ter instalado as seguintes ferramentas:
+[Git](https://git-scm.com) e [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
+Além disto é importante ter um editor para trabalhar com o código, como [VisualStudio](https://visualstudio.microsoft.com/) e um sistema gerenciador de Banco de dados relacional, como o [SQLServer](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads).
 
 
-## Como executar
+#### Como executar
+<ol start="1">
+<li>Clone o projeto </li>
 
-1 - Baixe o projeto para sua máquina clonando o projeto
-* `$ git clone https://github.com/Elianehenri/DEVinCar02` 
-2 -No Windowns, vá para o arquivo appsettings.json e adicione a ConnectionString, seguindo o modelo abaixo 
-"ConnectionStrings": {
+```bash
+$ git clone https://github.com/Elianehenri/DEVinCar02
+  ```
+
+  <li> No arquivo <b style="color:#7b9eeb">appsettings.json</b> e adicione a ConnectionString, seguindo o modelo abaixo: <br>
+    
+    ```bash
+    "ConnectionStrings": {
   "ServerConnection": "Server=YOURSERVER\\SQLEXPRESS;Database=BD_CONDOMINIODEVAPI;Trusted_Connection=True;"
   }
-Aí você terá o SQL Server atualizado e o projeto está pronto para ser executado com `dotnet run`. Por padrão a rota será: `https://localhost:7019/` e para acessar o swaggerUI `https://localhost:7019/swagger/index.html`.
+    ```
+<li>Após o comando executado, atualize o Banco de Dados</li>
+
+```bash
+dotnet ef database update
+```
+<li>Pronto, sua aplicação está pronta para rodar</li>
+
+```bash
+dotnet watch run
+```
+## Autor
+  Eliane Henriqueta
 
 ## Como ele foi feito
 
-A aplicação foi desenvolvida individual.Cada funcionalidade foi desenvolvida em uma branch separada da Main. Além disso também foi utilizado a metodologia Kanban utilizando o Trello como quadro. 
+<li> A aplicação foi desenvolvida individual.Cada funcionalidade foi desenvolvida em uma branch separada da Main. Além disso também foi utilizado a metodologia Kanban utilizando o Trello como quadro. </li>
 
