@@ -7,7 +7,7 @@ Projeto avaliativo **DEVinHouse** desenvolvido com ASP.NET 6 com EntityFramework
 Este projeto é referente ao projeto DEVinCar  desenvolvido no modulo 02 da DevinHouse, por 3 squads. Está armazenado no https://github.com/DEVin-NDD/M2P2-DEVinCar.
 
 ## Aprendizado
-Atuar em projeto .Net com Entity Framework em C#, conectando em base SQL Server
+* Atuar em projeto .Net com Entity Framework em C#, conectando em base SQL Server
 * cache
 * middleware
 * content negotiation
